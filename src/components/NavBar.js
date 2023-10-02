@@ -1,8 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // If using React Router for navigation
 import './navBar.css'; // Import the CSS file for styling
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../store/authSlice';
+import { logout } from '../store/authSlice';
+
 
 const Navbar = () => {
+  const userData = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+  }
+
   return (
     <nav className="navbar">
       <div className="logo">
@@ -10,13 +22,13 @@ const Navbar = () => {
       </div>
       <ul className="nav-links">
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link>{userData}</Link>
         </li>
         <li>
-          <Link to="/contact">Logout</Link>
+          <Link onClick={handleLogout} to="/login">Logout</Link>
         </li>
       </ul>
     </nav>

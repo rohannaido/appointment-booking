@@ -1,8 +1,13 @@
 // src/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useHistory
+import axios from './axiosConfig';
+import { useDispatch } from 'react-redux';
+import { login } from './store/authSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useNavigate();
@@ -15,23 +20,25 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
+    try{
 
-      if (response.status === 200) {
-        // Redirect to /home on successful login
-        history('/home'); // Use history.push to navigate
-      } else {
-        alert('Login failed. Invalid credentials.');
+      const response = await axios.post('/auth/login', { username, password }); 
+      
+      dispatch(login(username));
+      
+      if(response?.data?.token){
+        localStorage.setItem('token', response.data.token);
       }
 
+      history('/home'); // Use history.push to navigate
+    }
+    catch(error){
+      console.log(error);
+      alert('Login failed. Invalid credentials.');
+    }
   };
 
   return (

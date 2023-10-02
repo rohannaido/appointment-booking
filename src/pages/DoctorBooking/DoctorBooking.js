@@ -1,5 +1,6 @@
+import './DoctorBooking.css'
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const DoctorBooking = () => {
@@ -16,7 +17,7 @@ const DoctorBooking = () => {
 
   const fetchDoctorData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/doctor/list/${doctorId}`);
+      const response = await axios.get(`/doctor/list/${doctorId}`);
       setDoctorInfo(response.data?.[0]);
       setLoading(false);
     } catch (error) {
@@ -59,11 +60,18 @@ const DoctorBooking = () => {
 
   return (
     <>
-      <h1>TEST</h1>
       <h2>{doctorInfo?.doctor_name}</h2>
-      {slotDates.map((dateItem) => <button onClick={() => handleDateClick(dateItem)}>{dateItem}</button>)}
+      
+      <h3>Dates Available</h3>
+      <div className='slotDatesContainer'>
+        {slotDates.map((dateItem) => <button className='slotTimingButton' onClick={() => handleDateClick(dateItem)}>{dateItem}</button>)}
+      </div>
+      
       {selectedSlotDate ? <h2>{selectedSlotDate}</h2> : <></>}
-      {slotTimes.map((timeItem) => <button>{timeItem.start} - {timeItem.end}</button>)}
+
+      <div className='slotTimingsContainer'>
+        {selectedSlotDate ? slotTimes.map((timeItem) => <button className='slotTimingButton'>{timeItem.start} - {timeItem.end}</button>) : ""}
+      </div>
     </>
   );
 };

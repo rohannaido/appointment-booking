@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DoctorCard from '../components/DoctorCard';  // Assuming SquareComponent is in a file named SquareComponent.js
-import axios from 'axios';
+import axios from './../axiosConfig';
 
 const Home = () => {
   const [doctors, setDoctors] = useState([]); 
@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/doctor/list'); // Replace with your API endpoint
+        const response = await axios.get('/doctor/list'); // Replace with your API endpoint
         setDoctors(response.data);
         setLoading(false);
       } catch (error) {
