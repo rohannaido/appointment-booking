@@ -6,7 +6,7 @@ const DoctorCardComponent = ({ doctor }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/book-doctor/${id}`)
+    navigate(`/book-doctor-list/${id}`)
   }
   
   return (

@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    value: "",
+    value: {},
   },
   reducers: {
     login: (state, action) => {
       state.value = action.payload;
     },
     logout: (state) => {
-      state.value = "";
+      state.value = {};
     },
   },
 });

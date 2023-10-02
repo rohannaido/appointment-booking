@@ -27,7 +27,10 @@ const Login = () => {
 
       const response = await axios.post('/auth/login', { username, password }); 
       
-      dispatch(login(username));
+      dispatch(login({
+        username,
+        token: response?.data?.token,
+      }));
       
       if(response?.data?.token){
         localStorage.setItem('token', response.data.token);

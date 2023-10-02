@@ -1,11 +1,14 @@
-import './DoctorBooking.css'
+import './DoctorSlotList.css'
 import React, { useEffect, useState } from 'react';
 import axios from '../../axiosConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addSlot } from '../../store/slotBookingSlice';
 
-const DoctorBooking = () => {
+const DoctorSlotList = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
   const [doctorInfo, setDoctorInfo] = useState({});
@@ -47,7 +50,18 @@ const DoctorBooking = () => {
 
   const handleDateClick = (slotDate) => {
     fetchSlotsByDoctorByDate(slotDate);
-    navigate(`/book-doctor/${doctorId}/${slotDate}`)
+    navigate(`/book-doctor-list/${doctorId}/${slotDate}`)
+  }
+
+  const handleSlotClick = (slotTimeStart, slotTimeEnd) => {
+    dispatch(addSlot({
+      doctorId,
+      doctorName: doctorInfo?.doctor_name,
+      slotDate: selectedSlotDate,
+      slotTimeStart,
+      slotTimeEnd,
+    }));
+    navigate(`/slot-booking/`)
   }
 
   useEffect(() => {
@@ -70,10 +84,13 @@ const DoctorBooking = () => {
       {selectedSlotDate ? <h2>{selectedSlotDate}</h2> : <></>}
 
       <div className='slotTimingsContainer'>
-        {selectedSlotDate ? slotTimes.map((timeItem) => <button className='slotTimingButton'>{timeItem.start} - {timeItem.end}</button>) : ""}
+        {selectedSlotDate ? 
+          slotTimes.map((timeItem) => 
+            <button className='slotTimingButton' onClick={() => handleSlotClick(timeItem.start, timeItem.end)}>{timeItem.start} - {timeItem.end}</button>
+          ) : ""}
       </div>
     </>
   );
 };
 
-export default DoctorBooking;
+export default DoctorSlotList;
