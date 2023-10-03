@@ -9,19 +9,30 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const SlotBooking = () => {
   const slotData = useSelector(selectSlot);
+  const navigate = useNavigate();
 
   console.log(slotData);
 
   const [doctorInfo, setDoctorInfo] = useState({});
 
   const handleBooking = async () => {
-    toast.success("Successfully Booked!")
-    // const response = await axios.post("/book-slot", {
-    //   doctorId: slotData?.doctorId,
-    //   date: slotData?.slotDate,
-    //   startTime: slotData?.slotTimeStart,
-    //   endTime: slotData?.slotTimeEnd,
-    // });
+    try{
+      const response = await axios.post("/book/book-slot", {
+        doctorId: slotData?.doctorId,
+        date: slotData?.slotDate,
+        startTime: slotData?.slotTimeStart,
+        endTime: slotData?.slotTimeEnd,
+      });
+      toast.success("Successfully Booked!")
+
+      setTimeout(() => {
+        navigate(`/home`)
+      }, 1500)
+
+    }
+    catch(error){
+      toast.error(error);
+    }
   }
 
   return (
