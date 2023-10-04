@@ -9,6 +9,7 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { selectUser } from './store/authSlice';
 import { useSelector } from 'react-redux';
 import SlotBooking from './pages/SlotBooking/SlotBooking';
+import MyBookings from './pages/MyBookings/MyBookings';
 
 const App = () => {
   const userData = useSelector(selectUser);
@@ -32,6 +33,11 @@ const App = () => {
           <Route path="/slot-booking" element={
             <PrivateRoute>
               <SlotBooking />
+            </PrivateRoute>} 
+          />
+          <Route path="/my-bookings" element={
+            <PrivateRoute>
+              <MyBookings />
             </PrivateRoute>} 
           />
       </Routes>

@@ -1,0 +1,15 @@
+.slotDatesContainer{
+
+    flex-direction: row;
+    width: auto;
+    align-items: start;
+}
+
+.slotTimingsContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.slotTimingButton{
+    margin: 1rem;
+}

@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link>{userData?.username}</Link>
+          <Link to="/my-bookings">{userData?.username}</Link>
         </li>
         <li>
           <Link onClick={handleLogout} to="/login">Logout</Link>
