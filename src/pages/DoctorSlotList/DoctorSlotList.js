@@ -76,9 +76,13 @@ const DoctorSlotList = () => {
     <>
       <h2>{doctorInfo?.doctor_name}</h2>
       
-      <h3>Dates Available</h3>
+      <h3>Dates for Booking</h3>
       <div className='slotDatesContainer'>
-        {slotDates.map((dateItem) => <button className='slotTimingButton' onClick={() => handleDateClick(dateItem)}>{dateItem}</button>)}
+        {(slotDates?.length > 0) ? 
+          slotDates.map((dateItem) => <button className='slotTimingButton' onClick={() => handleDateClick(dateItem)}>{dateItem}</button>)
+          :
+          "No dates available for the Doctor!"
+        }
       </div>
       
       {selectedSlotDate ? <h2>{selectedSlotDate}</h2> : <></>}
